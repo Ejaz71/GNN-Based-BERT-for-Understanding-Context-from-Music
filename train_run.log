@@ -17,3 +17,18 @@ Epoch 1/10 train_loss=0.3774 val_loss=0.2179 val_macro_f1=0.0198 val_micro_f1=0.
   -> new best val_macro_f1=0.0198, checkpoint saved
 Epoch 2/10 train_loss=0.1860 val_loss=0.1579 val_macro_f1=0.1704 val_micro_f1=0.3784 (181.2s)
   -> new best val_macro_f1=0.1704, checkpoint saved
+Epoch 3/10 train_loss=0.1457 val_loss=0.1318 val_macro_f1=0.2723 val_micro_f1=0.5181 (155.4s)
+  -> new best val_macro_f1=0.2723, checkpoint saved
+Epoch 4/10 train_loss=0.1262 val_loss=0.1193 val_macro_f1=0.3428 val_micro_f1=0.5662 (182.9s)
+  -> new best val_macro_f1=0.3428, checkpoint saved
+Epoch 5/10 train_loss=0.1134 val_loss=0.1116 val_macro_f1=0.4320 val_micro_f1=0.6330 (166.6s)
+  -> new best val_macro_f1=0.4320, checkpoint saved
+Epoch 6/10 train_loss=0.1045 val_loss=0.1042 val_macro_f1=0.4383 val_micro_f1=0.6312 (166.1s)
+  -> new best val_macro_f1=0.4383, checkpoint saved
+Epoch 7/10 train_loss=0.0980 val_loss=0.1016 val_macro_f1=0.5012 val_micro_f1=0.6847 (157.9s)
+  -> new best val_macro_f1=0.5012, checkpoint saved
+Epoch 8/10 train_loss=0.0929 val_loss=0.0980 val_macro_f1=0.5000 val_micro_f1=0.6761 (175.0s)
+Epoch 9/10 train_loss=0.0894 val_loss=0.0969 val_macro_f1=0.5250 val_micro_f1=0.6925 (179.2s)
+  -> new best val_macro_f1=0.5250, checkpoint saved
+Epoch 10/10 train_loss=0.0875 val_loss=0.0958 val_macro_f1=0.5234 val_micro_f1=0.6908 (1140.0s)
+Training complete. Best val Macro-F1: 0.5250

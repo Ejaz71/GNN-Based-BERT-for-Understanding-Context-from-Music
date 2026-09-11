@@ -1,0 +1,617 @@
+{
+  "history": {
+    "train_loss": [
+      0.3773662207675153,
+      0.18603568480930466,
+      0.14565586595647578,
+      0.12615045600071334,
+      0.11344528222537559,
+      0.10448106216347736,
+      0.09802434331588987,
+      0.09292295108130877,
+      0.08941799759918796,
+      0.08749868626287882
+    ],
+    "val_loss": [
+      0.21788760112679523,
+      0.15788177757159524,
+      0.13179995411116144,
+      0.11931734391744586,
+      0.11159972479377968,
+      0.10416630698718886,
+      0.10164606549601624,
+      0.09796262024969295,
+      0.0968628165082655,
+      0.09580832039532454
+    ],
+    "val_macro_f1": [
+      0.01981132075471698,
+      0.17041245856589923,
+      0.2723463586949511,
+      0.3427653838928028,
+      0.4319514024961803,
+      0.43828094665075695,
+      0.5011980719334563,
+      0.5000184846682406,
+      0.5249912603519638,
+      0.5234091403522924
+    ],
+    "val_micro_f1": [
+      0.13067828251400124,
+      0.3784344219803007,
+      0.5181006111894687,
+      0.5661566156615662,
+      0.6330275229357798,
+      0.631175468483816,
+      0.6846703733121525,
+      0.6760790641387656,
+      0.6924901185770751,
+      0.6908077994428969
+    ]
+  },
+  "best_val_macro_f1": 0.5249912603519638,
+  "test": {
+    "macro_f1": 0.5604447136436375,
+    "micro_f1": 0.7140762463343109,
+    "mean_auc_pr": 0.6818083484830375,
+    "baseline_majority_macro_f1": 0.0,
+    "baseline_majority_micro_f1": 0.0,
+    "per_tag": [
+      {
+        "tag": "low quality",
+        "precision": 1.0,
+        "recall": 0.9769230769230769,
+        "f1": 0.9883268482490273,
+        "support": 130
+      },
+      {
+        "tag": "instrumental",
+        "precision": 0.8470588235294118,
+        "recall": 0.8888888888888888,
+        "f1": 0.8674698795180723,
+        "support": 81
+      },
+      {
+        "tag": "emotional",
+        "precision": 0.803030303030303,
+        "recall": 0.803030303030303,
+        "f1": 0.803030303030303,
+        "support": 66
+      },
+      {
+        "tag": "noisy",
+        "precision": 0.9253731343283582,
+        "recall": 0.96875,
+        "f1": 0.9465648854961832,
+        "support": 64
+      },
+      {
+        "tag": "passionate",
+        "precision": 0.9069767441860465,
+        "recall": 0.6,
+        "f1": 0.7222222222222222,
+        "support": 65
+      },
+      {
+        "tag": "medium tempo",
+        "precision": 0.6851851851851852,
+        "recall": 0.5873015873015873,
+        "f1": 0.6324786324786325,
+        "support": 63
+      },
+      {
+        "tag": "energetic",
+        "precision": 0.75,
+        "recall": 0.65,
+        "f1": 0.6964285714285714,
+        "support": 60
+      },
+      {
+        "tag": "amateur recording",
+        "precision": 0.7142857142857143,
+        "recall": 0.625,
+        "f1": 0.6666666666666666,
+        "support": 40
+      },
+      {
+        "tag": "live performance",
+        "precision": 1.0,
+        "recall": 0.6808510638297872,
+        "f1": 0.810126582278481,
+        "support": 47
+      },
+      {
+        "tag": "slow tempo",
+        "precision": 0.8717948717948718,
+        "recall": 0.5964912280701754,
+        "f1": 0.7083333333333334,
+        "support": 57
+      },
+      {
+        "tag": "acoustic drums",
+        "precision": 0.7906976744186046,
+        "recall": 0.7727272727272727,
+        "f1": 0.7816091954022989,
+        "support": 44
+      },
+      {
+        "tag": "fast tempo",
+        "precision": 0.75,
+        "recall": 0.6666666666666666,
+        "f1": 0.7058823529411765,
+        "support": 27
+      },
+      {
+        "tag": "mono",
+        "precision": 0.9761904761904762,
+        "recall": 0.9111111111111111,
+        "f1": 0.9425287356321839,
+        "support": 45
+      },
+      {
+        "tag": "groovy",
+        "precision": 1.0,
+        "recall": 0.4,
+        "f1": 0.5714285714285714,
+        "support": 30
+      },
+      {
+        "tag": "bass guitar",
+        "precision": 0.8888888888888888,
+        "recall": 0.8888888888888888,
+        "f1": 0.8888888888888888,
+        "support": 27
+      },
+      {
+        "tag": "electric guitar",
+        "precision": 0.75,
+        "recall": 0.631578947368421,
+        "f1": 0.6857142857142857,
+        "support": 19
+      },
+      {
+        "tag": "acoustic guitar",
+        "precision": 0.8461538461538461,
+        "recall": 0.4583333333333333,
+        "f1": 0.5945945945945946,
+        "support": 24
+      },
+      {
+        "tag": "instrumental music",
+        "precision": 0.8666666666666667,
+        "recall": 0.8125,
+        "f1": 0.8387096774193549,
+        "support": 32
+      },
+      {
+        "tag": "uptempo",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 29
+      },
+      {
+        "tag": "piano",
+        "precision": 0.9411764705882353,
+        "recall": 0.47058823529411764,
+        "f1": 0.6274509803921569,
+        "support": 34
+      },
+      {
+        "tag": "punchy kick",
+        "precision": 0.8125,
+        "recall": 0.8666666666666667,
+        "f1": 0.8387096774193549,
+        "support": 30
+      },
+      {
+        "tag": "poor audio quality",
+        "precision": 0.6666666666666666,
+        "recall": 0.6363636363636364,
+        "f1": 0.6511627906976745,
+        "support": 22
+      },
+      {
+        "tag": "punchy snare",
+        "precision": 0.8214285714285714,
+        "recall": 0.92,
+        "f1": 0.8679245283018868,
+        "support": 25
+      },
+      {
+        "tag": "groovy bass",
+        "precision": 0.7272727272727273,
+        "recall": 0.36363636363636365,
+        "f1": 0.48484848484848486,
+        "support": 22
+      },
+      {
+        "tag": "happy",
+        "precision": 0.8333333333333334,
+        "recall": 0.7142857142857143,
+        "f1": 0.7692307692307693,
+        "support": 28
+      },
+      {
+        "tag": "male voice",
+        "precision": 0.8,
+        "recall": 0.631578947368421,
+        "f1": 0.7058823529411765,
+        "support": 19
+      },
+      {
+        "tag": "moderate tempo",
+        "precision": 0.4444444444444444,
+        "recall": 0.5333333333333333,
+        "f1": 0.48484848484848486,
+        "support": 15
+      },
+      {
+        "tag": "e-bass",
+        "precision": 0.7916666666666666,
+        "recall": 0.8260869565217391,
+        "f1": 0.8085106382978723,
+        "support": 23
+      },
+      {
+        "tag": "shimmering hi hats",
+        "precision": 1.0,
+        "recall": 0.9473684210526315,
+        "f1": 0.972972972972973,
+        "support": 19
+      },
+      {
+        "tag": "male vocal",
+        "precision": 0.9444444444444444,
+        "recall": 0.8095238095238095,
+        "f1": 0.8717948717948718,
+        "support": 21
+      },
+      {
+        "tag": "rock",
+        "precision": 1.0,
+        "recall": 0.08333333333333333,
+        "f1": 0.15384615384615385,
+        "support": 24
+      },
+      {
+        "tag": "percussion",
+        "precision": 0.5,
+        "recall": 0.07142857142857142,
+        "f1": 0.125,
+        "support": 14
+      },
+      {
+        "tag": "no voices",
+        "precision": 0.6111111111111112,
+        "recall": 0.6875,
+        "f1": 0.6470588235294118,
+        "support": 16
+      },
+      {
+        "tag": "youthful",
+        "precision": 0.75,
+        "recall": 0.42857142857142855,
+        "f1": 0.5454545454545454,
+        "support": 14
+      },
+      {
+        "tag": "pop",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 26
+      },
+      {
+        "tag": "male singer",
+        "precision": 0.8,
+        "recall": 0.4444444444444444,
+        "f1": 0.5714285714285714,
+        "support": 18
+      },
+      {
+        "tag": "spirited",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 23
+      },
+      {
+        "tag": "romantic",
+        "precision": 0.75,
+        "recall": 0.2727272727272727,
+        "f1": 0.4,
+        "support": 22
+      },
+      {
+        "tag": "electronic drums",
+        "precision": 0.8888888888888888,
+        "recall": 0.8888888888888888,
+        "f1": 0.8888888888888888,
+        "support": 18
+      },
+      {
+        "tag": "exciting",
+        "precision": 1.0,
+        "recall": 0.15789473684210525,
+        "f1": 0.2727272727272727,
+        "support": 19
+      },
+      {
+        "tag": "upbeat",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 14
+      },
+      {
+        "tag": "bass",
+        "precision": 0.875,
+        "recall": 0.3684210526315789,
+        "f1": 0.5185185185185185,
+        "support": 19
+      },
+      {
+        "tag": "loud",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 18
+      },
+      {
+        "tag": "mellow",
+        "precision": 0.75,
+        "recall": 0.14285714285714285,
+        "f1": 0.24,
+        "support": 21
+      },
+      {
+        "tag": "keyboard harmony",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 9
+      },
+      {
+        "tag": "fun",
+        "precision": 0.8571428571428571,
+        "recall": 0.9473684210526315,
+        "f1": 0.9,
+        "support": 19
+      },
+      {
+        "tag": "cheerful",
+        "precision": 0.75,
+        "recall": 0.15789473684210525,
+        "f1": 0.2608695652173913,
+        "support": 19
+      },
+      {
+        "tag": "easygoing",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 12
+      },
+      {
+        "tag": "flat male vocal",
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 15
+      },
+      {
+        "tag": "e-guitar",
+        "precision": 0.7857142857142857,
+        "recall": 0.44,
+        "f1": 0.5641025641025641,
+        "support": 25
+      }
+    ]
+  },
+  "example_predictions": [
+    {
+      "caption": "The excerpt starts off with 3 bass drum beats after which an explosion and a crumbling sound can be heard. After this, downward sliding strings or a similar instrument in timbre can be heard creating a sort of scary effect. In the background wind sounds can be heard throughout.",
+      "true_tags": [],
+      "top_predicted_tags": [
+        [
+          "piano",
+          0.039428532123565674
+        ],
+        [
+          "bass guitar",
+          0.036215346306562424
+        ],
+        [
+          "percussion",
+          0.028705742210149765
+        ],
+        [
+          "acoustic drums",
+          0.027726992964744568
+        ],
+        [
+          "male voice",
+          0.02363908290863037
+        ],
+        [
+          "low quality",
+          0.022917700931429863
+        ],
+        [
+          "upbeat",
+          0.022219644859433174
+        ],
+        [
+          "instrumental",
+          0.02167455106973648
+        ]
+      ]
+    },
+    {
+      "caption": "This is the nightcore version of a rock music piece. There is a distorted electric guitar sound playing the main melody and a bass guitar in the background. The rhythm consists of a slightly fast-paced and hard-hitting rock acoustic drum beat. The atmosphere is rebellious. This piece could be used in the soundtrack of an anime.",
+      "true_tags": [
+        "acoustic drums",
+        "bass guitar"
+      ],
+      "top_predicted_tags": [
+        [
+          "bass guitar",
+          0.7761847972869873
+        ],
+        [
+          "acoustic drums",
+          0.7575036883354187
+        ],
+        [
+          "electric guitar",
+          0.5413001179695129
+        ],
+        [
+          "instrumental",
+          0.24678641557693481
+        ],
+        [
+          "energetic",
+          0.20825333893299103
+        ],
+        [
+          "loud",
+          0.19538597762584686
+        ],
+        [
+          "rock",
+          0.17815308272838593
+        ],
+        [
+          "fast tempo",
+          0.1666955202817917
+        ]
+      ]
+    },
+    {
+      "caption": "The low quality recording features a jazzy organ keys melody. The recording is in mono, noisy, muffled and slightly distorted.",
+      "true_tags": [
+        "low quality",
+        "noisy",
+        "mono"
+      ],
+      "top_predicted_tags": [
+        [
+          "low quality",
+          0.9536662697792053
+        ],
+        [
+          "noisy",
+          0.9171252250671387
+        ],
+        [
+          "mono",
+          0.8606404066085815
+        ],
+        [
+          "flat male vocal",
+          0.08494076877832413
+        ],
+        [
+          "passionate",
+          0.07173055410385132
+        ],
+        [
+          "loud",
+          0.04964438080787659
+        ],
+        [
+          "emotional",
+          0.04619025066494942
+        ],
+        [
+          "energetic",
+          0.0446915440261364
+        ]
+      ]
+    },
+    {
+      "caption": "This is a mantra/meditation music piece. There is a male vocalist in the lead that is singing in a chant-like manner. The flute is playing a calming tune. There is an electronic sound effect that gives a texture of vibration in the background. A bass guitar can be heard playing notes every now and then. There is an immersive atmosphere to this piece. It could be playing in the background of a meditation video. It could also be played as an accompaniment piece for meditation courses.",
+      "true_tags": [
+        "bass guitar",
+        "male vocal"
+      ],
+      "top_predicted_tags": [
+        [
+          "male vocal",
+          0.8754320740699768
+        ],
+        [
+          "bass guitar",
+          0.5383777022361755
+        ],
+        [
+          "electronic drums",
+          0.5143266916275024
+        ],
+        [
+          "electric guitar",
+          0.21442173421382904
+        ],
+        [
+          "acoustic drums",
+          0.16783030331134796
+        ],
+        [
+          "piano",
+          0.15810425579547882
+        ],
+        [
+          "groovy",
+          0.14025631546974182
+        ],
+        [
+          "easygoing",
+          0.12352806329727173
+        ]
+      ]
+    },
+    {
+      "caption": "This is an instructive recording of a male vocalist singing in an erotic manner. A backwards reverb effect is applied to the vocal which gives the track a feeling of anticipation. This track could be used to exemplify the use of the backwards reverb effect in sound design courses.",
+      "true_tags": [
+        "male vocal"
+      ],
+      "top_predicted_tags": [
+        [
+          "male voice",
+          0.14023466408252716
+        ],
+        [
+          "male vocal",
+          0.09786659479141235
+        ],
+        [
+          "amateur recording",
+          0.05868659168481827
+        ],
+        [
+          "low quality",
+          0.03727767989039421
+        ],
+        [
+          "electric guitar",
+          0.034228481352329254
+        ],
+        [
+          "percussion",
+          0.03253379091620445
+        ],
+        [
+          "electronic drums",
+          0.032512836158275604
+        ],
+        [
+          "medium tempo",
+          0.03239024803042412
+        ]
+      ]
+    }
+  ],
+  "attention_example_caption": "The excerpt starts off with 3 bass drum beats after which an explosion and a crumbling sound can be heard. After this, downward sliding strings or a similar instrument in timbre can be heard creating a sort of scary effect. In the background wind sounds can be heard throughout."
+}

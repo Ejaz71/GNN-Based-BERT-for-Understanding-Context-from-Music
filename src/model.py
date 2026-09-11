@@ -7,7 +7,9 @@ class BertMultiLabelClassifier(nn.Module):
 
     def __init__(self, model_name: str, num_labels: int):
         super().__init__()
-        self.encoder = AutoModel.from_pretrained(model_name)
+        # "eager" attention is required so output_attentions=True actually returns
+        # attention weights -- transformers' default "sdpa" backend does not support it.
+        self.encoder = AutoModel.from_pretrained(model_name, attn_implementation="eager")
         self.classifier = nn.Linear(self.encoder.config.hidden_size, num_labels)
 
     def forward(self, input_ids, attention_mask, output_attentions: bool = False):

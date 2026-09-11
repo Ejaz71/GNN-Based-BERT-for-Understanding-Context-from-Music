@@ -31,13 +31,30 @@ datasets.
 
 ### Results
 
-_Filled in after running the pipeline below — see `results/metrics.json` for the full
-numbers and `results/plots/` for the curves._
+Test set (553 held-out clips), `distilbert-base-uncased`, 10 epochs, batch size 16, lr 2e-5:
 
 | Model | Macro-F1 | Micro-F1 | Mean AUC-PR |
 |---|---|---|---|
-| Majority-tag baseline | _TBD_ | _TBD_ | – |
-| Task 1: DistilBERT fine-tuned | _TBD_ | _TBD_ | _TBD_ |
+| Majority-tag baseline | 0.000 | 0.000 | – |
+| Task 1: DistilBERT fine-tuned | **0.560** | **0.714** | **0.682** |
+
+The majority baseline scores 0 because no single top-50 tag exceeds a 50% base rate in the
+training set (the most common tag, "low quality", appears in only ~22% of clips), so
+always-predict-negative is its best constant strategy — the fine-tuned model's F1 gain
+comes entirely from actually reading the caption text.
+
+Validation Macro/Micro-F1 climbed steadily and had not plateaued by epoch 10 (best
+Macro-F1 0.525 at epoch 9); see `results/plots/f1_curve.png` and `loss_curve.png`. Training
+loss kept falling past epoch 6 while validation loss flattened, indicating mild overfitting
+in later epochs — a smaller learning rate or early stopping around epoch 8-9 would likely
+match these results with less overfit.
+
+5 example test-set predictions and a CLS-attention visualization (`results/plots/attention_example.png`)
+are saved in `results/metrics.json`. Qualitatively, the model is confident and correct on
+tags with strong lexical cues in the caption (e.g. predicting `low quality` 0.95, `noisy`
+0.92, `mono` 0.86 for a caption literally containing those words), and less confident on
+tags that require more world knowledge to infer (e.g. only 0.10 confidence on `male vocal`
+for a caption describing "a male vocalist singing").
 
 ## Setup
 
