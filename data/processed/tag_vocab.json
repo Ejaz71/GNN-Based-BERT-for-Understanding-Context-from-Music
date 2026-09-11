@@ -1,0 +1,202 @@
+[
+  {
+    "tag": "low quality",
+    "count": 1220
+  },
+  {
+    "tag": "instrumental",
+    "count": 908
+  },
+  {
+    "tag": "emotional",
+    "count": 636
+  },
+  {
+    "tag": "noisy",
+    "count": 628
+  },
+  {
+    "tag": "passionate",
+    "count": 610
+  },
+  {
+    "tag": "medium tempo",
+    "count": 608
+  },
+  {
+    "tag": "energetic",
+    "count": 599
+  },
+  {
+    "tag": "amateur recording",
+    "count": 518
+  },
+  {
+    "tag": "live performance",
+    "count": 477
+  },
+  {
+    "tag": "slow tempo",
+    "count": 476
+  },
+  {
+    "tag": "acoustic drums",
+    "count": 394
+  },
+  {
+    "tag": "fast tempo",
+    "count": 383
+  },
+  {
+    "tag": "mono",
+    "count": 358
+  },
+  {
+    "tag": "groovy",
+    "count": 321
+  },
+  {
+    "tag": "bass guitar",
+    "count": 297
+  },
+  {
+    "tag": "electric guitar",
+    "count": 297
+  },
+  {
+    "tag": "acoustic guitar",
+    "count": 292
+  },
+  {
+    "tag": "instrumental music",
+    "count": 260
+  },
+  {
+    "tag": "uptempo",
+    "count": 247
+  },
+  {
+    "tag": "piano",
+    "count": 240
+  },
+  {
+    "tag": "punchy kick",
+    "count": 239
+  },
+  {
+    "tag": "poor audio quality",
+    "count": 236
+  },
+  {
+    "tag": "punchy snare",
+    "count": 235
+  },
+  {
+    "tag": "groovy bass",
+    "count": 229
+  },
+  {
+    "tag": "happy",
+    "count": 228
+  },
+  {
+    "tag": "male voice",
+    "count": 224
+  },
+  {
+    "tag": "moderate tempo",
+    "count": 224
+  },
+  {
+    "tag": "e-bass",
+    "count": 222
+  },
+  {
+    "tag": "shimmering hi hats",
+    "count": 217
+  },
+  {
+    "tag": "male vocal",
+    "count": 208
+  },
+  {
+    "tag": "rock",
+    "count": 207
+  },
+  {
+    "tag": "percussion",
+    "count": 206
+  },
+  {
+    "tag": "no voices",
+    "count": 204
+  },
+  {
+    "tag": "youthful",
+    "count": 202
+  },
+  {
+    "tag": "pop",
+    "count": 199
+  },
+  {
+    "tag": "male singer",
+    "count": 195
+  },
+  {
+    "tag": "spirited",
+    "count": 193
+  },
+  {
+    "tag": "romantic",
+    "count": 191
+  },
+  {
+    "tag": "electronic drums",
+    "count": 188
+  },
+  {
+    "tag": "exciting",
+    "count": 182
+  },
+  {
+    "tag": "upbeat",
+    "count": 181
+  },
+  {
+    "tag": "bass",
+    "count": 178
+  },
+  {
+    "tag": "loud",
+    "count": 171
+  },
+  {
+    "tag": "mellow",
+    "count": 164
+  },
+  {
+    "tag": "keyboard harmony",
+    "count": 162
+  },
+  {
+    "tag": "fun",
+    "count": 161
+  },
+  {
+    "tag": "cheerful",
+    "count": 157
+  },
+  {
+    "tag": "easygoing",
+    "count": 155
+  },
+  {
+    "tag": "flat male vocal",
+    "count": 151
+  },
+  {
+    "tag": "e-guitar",
+    "count": 147
+  }
+]

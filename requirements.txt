@@ -1,0 +1,12 @@
+torch
+transformers
+datasets
+scikit-learn
+matplotlib
+pandas
+numpy
+tqdm
+pyyaml
+jupyter
+ipykernel
+huggingface_hub

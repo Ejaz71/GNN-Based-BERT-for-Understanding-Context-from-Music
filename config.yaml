@@ -1,0 +1,30 @@
+# Task 1: BERT baseline for music tag understanding (MusicCaps)
+
+data:
+  dataset_name: "google/MusicCaps"
+  top_k_tags: 50
+  max_length: 128
+  seed: 42
+  train_frac: 0.8
+  val_frac: 0.1
+  test_frac: 0.1
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  splits_dir: "data/splits"
+
+model:
+  # Swap to "bert-base-uncased" for the full-size model; everything else stays the same.
+  name: "distilbert-base-uncased"
+
+train:
+  batch_size: 16
+  epochs: 10
+  lr: 2.0e-5
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  threshold: 0.5
+
+paths:
+  checkpoint_dir: "results/checkpoints"
+  plots_dir: "results/plots"
+  metrics_path: "results/metrics.json"
