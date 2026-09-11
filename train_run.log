@@ -15,3 +15,5 @@ Notes:
 - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
 Epoch 1/10 train_loss=0.3774 val_loss=0.2179 val_macro_f1=0.0198 val_micro_f1=0.1307 (106.7s)
   -> new best val_macro_f1=0.0198, checkpoint saved
+Epoch 2/10 train_loss=0.1860 val_loss=0.1579 val_macro_f1=0.1704 val_micro_f1=0.3784 (181.2s)
+  -> new best val_macro_f1=0.1704, checkpoint saved
