@@ -36,12 +36,27 @@ Test set (553 held-out clips), `distilbert-base-uncased`, 10 epochs, batch size 
 | Model | Macro-F1 | Micro-F1 | Mean AUC-PR |
 |---|---|---|---|
 | Majority-tag baseline | 0.000 | 0.000 | – |
-| Task 1: DistilBERT fine-tuned | **0.560** | **0.714** | **0.682** |
+| Fixed threshold (0.5) | 0.560 | **0.714** | 0.682 |
+| **Tuned per-tag threshold** | **0.650** | 0.708 | 0.682 |
 
 The majority baseline scores 0 because no single top-50 tag exceeds a 50% base rate in the
 training set (the most common tag, "low quality", appears in only ~22% of clips), so
 always-predict-negative is its best constant strategy — the fine-tuned model's F1 gain
 comes entirely from actually reading the caption text.
+
+**Why per-tag thresholds:** a single global 0.5 cutoff applied to a 50-way sigmoid head is
+a poor fit when tag frequencies range from 130 down to 9 test examples. At 0.5, **8 of the
+50 tags** (`uptempo`, `pop`, `spirited`, `upbeat`, `loud`, `keyboard harmony`, `easygoing`,
+`flat male vocal`) scored exactly F1=0 — not because the model couldn't distinguish them
+(their true positives got a clearly elevated probability relative to negatives, up to 0.5),
+but because that probability never crossed 0.5. Tuning one threshold per tag to maximize
+F1 on the **validation** set (never on test) and applying it at test time recovered all 8
+dead tags to F1 0.21-0.50 and lifted Macro-F1 from 0.560 to 0.650, at essentially no cost to
+Micro-F1 or AUC-PR (which is threshold-independent and was already 0.682 — confirming the
+model's *ranking* of tags was fine all along; only the binarization cutoff was mis-set).
+This is implemented in `tune_per_tag_thresholds()` in `src/evaluate.py` and required no
+retraining. Both the fixed- and tuned-threshold reports are kept in `results/metrics.json`
+for comparison.
 
 Validation Macro/Micro-F1 climbed steadily and had not plateaued by epoch 10 (best
 Macro-F1 0.525 at epoch 9); see `results/plots/f1_curve.png` and `loss_curve.png`. Training
@@ -55,6 +70,28 @@ tags with strong lexical cues in the caption (e.g. predicting `low quality` 0.95
 0.92, `mono` 0.86 for a caption literally containing those words), and less confident on
 tags that require more world knowledge to infer (e.g. only 0.10 confidence on `male vocal`
 for a caption describing "a male vocalist singing").
+
+### Further improvement ideas (not implemented)
+
+Roughly in order of effort vs. expected payoff:
+
+- **`bert-base-uncased` instead of DistilBERT** — more capacity for the semantically subtler
+  mood/genre tags (`spirited`, `cheerful`, `easygoing`) that don't share vocabulary with the
+  caption text, at the cost of ~2x training time. One-line change in `config.yaml`.
+- **Early stopping around epoch 8-9** instead of a fixed 10 — the val-loss curve already
+  shows mild overfitting past epoch 6-7; would likely match current results with a cleaner
+  loss curve.
+- **Class-weighted or focal loss** in place of plain `BCEWithLogitsLoss`, to push harder on
+  the long-tail tags (many have well under 5% prevalence) during training itself, rather
+  than only fixing it post-hoc via thresholds.
+- **Merge near-duplicate aspect phrases** before building the top-50 vocabulary — the raw
+  `aspect_list` field has 13,219 unique free-text phrases with heavy overlap (e.g.
+  `"uptempo"` / `"fast tempo"` / `"upbeat"` likely describe the same underlying property but
+  are currently three separate label classes, each starved of the others' training signal).
+  A simple synonym clustering pass could meaningfully raise support for the weakest tags.
+- **Longer captions**: `max_length=128` truncates a small number of the longest captions
+  (max observed: 136 words); bumping to 256 (still within the spec's recommended range) is
+  a one-line config change with negligible training-time cost at this dataset size.
 
 ## Setup
 

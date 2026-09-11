@@ -25,6 +25,44 @@ def majority_baseline(train_labels: np.ndarray, n_test: int, threshold: float = 
     return np.tile(row, (n_test, 1))
 
 
+def get_probs_and_labels(model, loader, device) -> tuple[np.ndarray, np.ndarray]:
+    model.eval()
+    all_probs, all_labels = [], []
+    with torch.no_grad():
+        for batch in loader:
+            logits = model(batch["input_ids"].to(device), batch["attention_mask"].to(device))
+            all_probs.append(torch.sigmoid(logits).cpu().numpy())
+            all_labels.append(batch["labels"].numpy())
+    return np.concatenate(all_probs), np.concatenate(all_labels)
+
+
+def tune_per_tag_thresholds(
+    val_probs: np.ndarray, val_labels: np.ndarray, grid: np.ndarray | None = None
+) -> np.ndarray:
+    """Picks, per tag, the probability threshold that maximizes F1 on the validation set.
+
+    A single global 0.5 cutoff is a poor fit for a 50-way multi-label head trained with
+    plain BCE: rarer/harder tags end up systematically under-confident (their true
+    positives rarely cross 0.5) while common/easy tags are well-calibrated. Tuning per tag
+    on val (never on test) fixes the miscalibration without touching the model at all.
+    """
+    if grid is None:
+        grid = np.linspace(0.05, 0.95, 19)
+    num_labels = val_labels.shape[1]
+    thresholds = np.full(num_labels, 0.5, dtype=np.float32)
+    for k in range(num_labels):
+        if val_labels[:, k].sum() == 0:
+            continue  # no positive examples to tune against; keep the default
+        best_f1, best_t = -1.0, 0.5
+        for t in grid:
+            preds = (val_probs[:, k] >= t).astype(np.float32)
+            f1 = f1_score(val_labels[:, k], preds, zero_division=0)
+            if f1 > best_f1:
+                best_f1, best_t = f1, t
+        thresholds[k] = best_t
+    return thresholds
+
+
 def plot_curves(history: dict, plots_dir) -> None:
     epochs = range(1, len(history["train_loss"]) + 1)
 
@@ -83,6 +121,7 @@ def main():
     device = get_device()
 
     train_ds = MusicCapsTagDataset(cfg, "train")
+    val_ds = MusicCapsTagDataset(cfg, "val")
     test_ds = MusicCapsTagDataset(cfg, "test")
     tag_vocab = test_ds.tag_vocab
     num_labels = len(tag_vocab)
@@ -92,26 +131,13 @@ def main():
     model.load_state_dict(torch.load(checkpoint_path, map_location=device))
     model.eval()
 
-    threshold = cfg["train"]["threshold"]
-    test_loader = DataLoader(test_ds, batch_size=cfg["train"]["batch_size"], shuffle=False)
+    batch_size = cfg["train"]["batch_size"]
+    val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=False)
+    test_loader = DataLoader(test_ds, batch_size=batch_size, shuffle=False)
 
-    all_probs, all_labels = [], []
-    with torch.no_grad():
-        for batch in test_loader:
-            input_ids = batch["input_ids"].to(device)
-            attention_mask = batch["attention_mask"].to(device)
-            logits = model(input_ids, attention_mask)
-            all_probs.append(torch.sigmoid(logits).cpu().numpy())
-            all_labels.append(batch["labels"].numpy())
-    all_probs = np.concatenate(all_probs)
-    all_labels = np.concatenate(all_labels)
-    all_preds = (all_probs >= threshold).astype(np.float32)
+    val_probs, val_labels = get_probs_and_labels(model, val_loader, device)
+    all_probs, all_labels = get_probs_and_labels(model, test_loader, device)
 
-    macro_f1 = f1_score(all_labels, all_preds, average="macro", zero_division=0)
-    micro_f1 = f1_score(all_labels, all_preds, average="micro", zero_division=0)
-    precision, recall, f1, support = precision_recall_fscore_support(
-        all_labels, all_preds, average=None, zero_division=0
-    )
     ap_scores = [
         average_precision_score(all_labels[:, k], all_probs[:, k])
         for k in range(num_labels)
@@ -124,30 +150,52 @@ def main():
     baseline_macro_f1 = f1_score(all_labels, baseline_preds, average="macro", zero_division=0)
     baseline_micro_f1 = f1_score(all_labels, baseline_preds, average="micro", zero_division=0)
 
-    per_tag_report = [
-        {
-            "tag": tag_vocab[k],
-            "precision": float(precision[k]),
-            "recall": float(recall[k]),
-            "f1": float(f1[k]),
-            "support": int(support[k]),
+    def build_report(preds: np.ndarray) -> dict:
+        precision, recall, f1, support = precision_recall_fscore_support(
+            all_labels, preds, average=None, zero_division=0
+        )
+        return {
+            "macro_f1": float(f1_score(all_labels, preds, average="macro", zero_division=0)),
+            "micro_f1": float(f1_score(all_labels, preds, average="micro", zero_division=0)),
+            "per_tag": [
+                {
+                    "tag": tag_vocab[k],
+                    "precision": float(precision[k]),
+                    "recall": float(recall[k]),
+                    "f1": float(f1[k]),
+                    "support": int(support[k]),
+                }
+                for k in range(num_labels)
+            ],
         }
-        for k in range(num_labels)
-    ]
+
+    fixed_threshold = cfg["train"]["threshold"]
+    fixed_preds = (all_probs >= fixed_threshold).astype(np.float32)
+    fixed_report = build_report(fixed_preds)
+
+    # Per-tag threshold tuning: calibrated on val, applied to test (see docstring for why).
+    tuned_thresholds = tune_per_tag_thresholds(val_probs, val_labels)
+    tuned_preds = (all_probs >= tuned_thresholds[None, :]).astype(np.float32)
+    tuned_report = build_report(tuned_preds)
 
     test_report = {
-        "macro_f1": float(macro_f1),
-        "micro_f1": float(micro_f1),
         "mean_auc_pr": mean_ap,
         "baseline_majority_macro_f1": float(baseline_macro_f1),
         "baseline_majority_micro_f1": float(baseline_micro_f1),
-        "per_tag": per_tag_report,
+        "fixed_threshold_0.5": fixed_report,
+        "tuned_per_tag_threshold": {**tuned_report, "thresholds": tuned_thresholds.tolist()},
+        # kept for backwards compatibility with earlier runs/notebooks
+        "macro_f1": fixed_report["macro_f1"],
+        "micro_f1": fixed_report["micro_f1"],
+        "per_tag": fixed_report["per_tag"],
     }
 
     print("=== Test set results ===")
-    print(f"Macro-F1:    {macro_f1:.4f}  (majority baseline: {baseline_macro_f1:.4f})")
-    print(f"Micro-F1:    {micro_f1:.4f}  (majority baseline: {baseline_micro_f1:.4f})")
-    print(f"Mean AUC-PR: {mean_ap:.4f}")
+    print(f"{'':20s} {'Macro-F1':>10s} {'Micro-F1':>10s}")
+    print(f"{'Majority baseline':20s} {baseline_macro_f1:10.4f} {baseline_micro_f1:10.4f}")
+    print(f"{'Fixed threshold 0.5':20s} {fixed_report['macro_f1']:10.4f} {fixed_report['micro_f1']:10.4f}")
+    print(f"{'Tuned per-tag thresh':20s} {tuned_report['macro_f1']:10.4f} {tuned_report['micro_f1']:10.4f}")
+    print(f"Mean AUC-PR (threshold-independent): {mean_ap:.4f}")
 
     examples_out = []
     rng = np.random.RandomState(cfg["data"]["seed"])
